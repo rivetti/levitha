@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSplice Mobile This software and documentation are Copyright 2010 to 2013 PrismTech Limited and its licensees. All 
+   rights reserved. See file: docs/LICENSE.html for full copyright notice and license terms. -->
+<configuration>
+
+  <root level="${log.level:-OFF}">
+   </root>
+
+</configuration>

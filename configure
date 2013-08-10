@@ -1,0 +1,13 @@
+#!/bin/bash
+
+rm -Rf ./src/generated-sources/*
+FILES=`find ./src/main/idl  -name "*.idl"`
+
+for file in $FILES; do
+    echo "java -jar /home/nicolo/jmobile/idl2j/target/idl2j-1.0.1-SNAPSHOT.jar  $file"
+    java -jar /home/nicolo/jmobile/idl2j/target/idl2j-1.0.1-SNAPSHOT.jar -i ./src/main/idl -td ./src/generated-sources $file
+done
+
+
+
+

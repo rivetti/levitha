@@ -1,0 +1,16 @@
+#include <uuid.idl>
+
+module org {
+	module opensplice {
+		module mobile {
+			module dev {
+				module gen {
+					struct TEventualGroup{
+						uuid memberId;
+					};
+					#pragma keylist TEventualGroup memberId.low memberId.high
+				};
+			};
+		};
+	};
+};

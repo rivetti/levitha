@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+                             OpenSplice Mobile
+
+       This software and documentation are Copyright 2010 to 2013 PrismTech
+       Limited and its licensees. All rights reserved. See file:
+
+                              docs/LICENSE.html
+
+       for full copyright notice and license terms.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.opensplice.mobile</groupId>
+    <artifactId>parent-pom</artifactId>
+    <packaging>pom</packaging>
+
+    <version>0.9.0-SNAPSHOT</version>
+
+    <name>OpenSplice Mobile parent POM</name>
+    <description>This is a parent POM with recommended dependencies for projects using OpenSplice Mobile.</description>
+    <url>http://www.opensplice.org</url>
+
+    <organization>
+        <name>PrismTech</name>
+        <url>http://www.prismtech.com</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>PrismTech licensed</name>
+            <url>docs/LICENSE.html</url>
+        </license>
+    </licenses>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Recommended versions of dependencies -->
+
+        <!--maven-version>3.0.4</maven-version-->
+        <!--  maven-project-3.0.4 not found ? -->
+        <maven-version>2.2.1</maven-version>
+        <!-- for Mobile projects themselves -->
+        <netty-version>3.6.3.Final</netty-version>
+        <trove4j-version>3.0.2</trove4j-version>
+        <slf4j-version>1.6.2</slf4j-version>
+        <commons-io-version>2.1</commons-io-version>
+        <maven-shade-plugin-version>2.0</maven-shade-plugin-version>
+
+        <!-- for Mobile internal tests -->
+        <junit-version>4.8.1</junit-version>
+        <logback-version>0.9.30</logback-version>
+        <build-helper-maven-plugin-version>1.7</build-helper-maven-plugin-version>
+
+        <!-- for Mobile examples -->
+        <maven-exec-plugin-version>1.2.1</maven-exec-plugin-version>
+        <scala-version>2.10.0</scala-version>
+        <maven-scala-plugin-version>2.15.2</maven-scala-plugin-version>
+        <idlj-maven-plugin-version>1.1.1</idlj-maven-plugin-version>
+        <javafx-maven-plugin-version>1.5</javafx-maven-plugin-version>
+        <groovy-version>1.8.6</groovy-version>
+        <gmaven-plugin-version>1.4</gmaven-plugin-version>
+        <gmaven-provider-version>1.8</gmaven-provider-version>
+
+        <!-- for Android Mobile examples -->
+        <android-maven-plugin-version>3.5.0</android-maven-plugin-version>
+        <slf4j-android-version>1.6.1-RC1</slf4j-android-version>
+
+        <!-- for internal purpose (plugins for Mobile products construction) -->
+        <proguard-maven-plugin-version>2.0.6</proguard-maven-plugin-version>
+        <proguard-version>4.8</proguard-version>
+        <maven-plugin-testing-version>1.2</maven-plugin-testing-version>
+        <maven-javadoc-plugin-version>2.9</maven-javadoc-plugin-version>
+
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <!-- Netty -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty</artifactId>
+                <version>${netty-version}</version>
+            </dependency>
+
+            <!-- Trove -->
+            <dependency>
+                <groupId>net.sf.trove4j</groupId>
+                <artifactId>trove4j</artifactId>
+                <version>${trove4j-version}</version>
+            </dependency>
+
+            <!-- Commons-IO -->
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io-version}</version>
+            </dependency>
+
+            <!-- slf4j logging -->
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>${slf4j-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-simple</artifactId>
+                <version>${slf4j-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-android</artifactId>
+                <version>${slf4j-android-version}</version>
+            </dependency>
+
+            <!-- Scala library -->
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-swing</artifactId>
+                <version>${scala-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-actors</artifactId>
+                <version>${scala-version}</version>
+            </dependency>
+
+            <!-- - - - - - - - - - - - - -->
+            <!-- Gateway internal tests -->
+            <!-- - - - - - - - - - - - - -->
+
+            <!-- JUnit -->
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit-version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- logback (slf4j compatible backend) -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback-version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Maven -->
+            <dependency>
+                <groupId>maven-core</groupId>
+                <artifactId>maven-core</artifactId>
+                <version>${maven-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-plugin-api</artifactId>
+                <version>${maven-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-project</artifactId>
+                <version>${maven-version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.maven</groupId>
+                <artifactId>maven-artifact</artifactId>
+                <version>${maven-version}</version>
+            </dependency>
+
+            <!-- Maven plugin tests -->
+            <dependency>
+                <groupId>org.apache.maven.plugin-testing</groupId>
+                <artifactId>maven-plugin-testing-harness</artifactId>
+                <version>${maven-plugin-testing-version}</version>
+                <scope>test</scope>
+            </dependency>
+ 
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+
+                <!-- Configure Maven to target Java 1.6 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <configuration>
+                        <source>1.6</source>
+                        <target>1.6</target>
+                    </configuration>
+                </plugin>
+
+                <!-- Maven exec plugin (for examples execution) -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>exec-maven-plugin</artifactId>
+                    <version>${maven-exec-plugin-version}</version>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>idlj-maven-plugin</artifactId>
+                    <version>${idlj-maven-plugin-version}</version>
+                </plugin>
+
+                <!-- Maven Android plugin -->
+                <plugin>
+                    <groupId>com.jayway.maven.plugins.android.generation2</groupId>
+                    <artifactId>android-maven-plugin</artifactId>
+                    <version>${android-maven-plugin-version}</version>
+                </plugin>
+
+                <!-- Maven JavaFX plugin -->
+                <plugin>
+                    <groupId>com.zenjava</groupId>
+                    <artifactId>javafx-maven-plugin</artifactId>
+                    <version>${javafx-maven-plugin-version}</version>
+                </plugin>
+
+                <!-- Maven Scala plugin -->
+                <plugin>
+                    <groupId>org.scala-tools</groupId>
+                    <artifactId>maven-scala-plugin</artifactId>
+                    <version>${maven-scala-plugin-version}</version>
+                </plugin>
+
+                <!-- Maven Shade plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-shade-plugin</artifactId>
+                    <version>${maven-shade-plugin-version}</version>
+                </plugin>
+
+                <!-- Maven Build Helper plugin -->
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>build-helper-maven-plugin</artifactId>
+                    <version>${build-helper-maven-plugin-version}</version>
+                </plugin>
+
+                <!-- Maven Groovy plugin -->
+                <plugin>
+                    <groupId>org.codehaus.gmaven</groupId>
+                    <artifactId>gmaven-plugin</artifactId>
+                    <version>${gmaven-plugin-version}</version>
+                    <!-- force GMaven plugin to use the Groovy version we want -->
+                    <configuration>
+                        <providerSelection>${gmaven-provider-version}</providerSelection>
+                    </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.gmaven.runtime</groupId>
+                            <artifactId>gmaven-runtime-${gmaven-provider-version}</artifactId>
+                            <version>${gmaven-plugin-version}</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>org.codehaus.groovy</groupId>
+                                    <artifactId>groovy-all</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.codehaus.groovy</groupId>
+                            <artifactId>groovy-all</artifactId>
+                            <version>${groovy-version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <!-- For Javadoc generation -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>${maven-javadoc-plugin-version}</version>
+                </plugin>
+
+                <!-- For Obfuscation -->
+                <plugin>
+                    <groupId>com.github.wvengen</groupId>
+                    <artifactId>proguard-maven-plugin</artifactId>
+                    <version>${proguard-maven-plugin-version}</version>
+                    <!-- Force usage of a more recent Proguard version -->
+                    <!-- (for -keepdirectories option)                 -->
+                    <dependencies>
+                        <dependency>
+                            <groupId>net.sf.proguard</groupId>
+                            <artifactId>proguard-base</artifactId>
+                            <version>${proguard-version}</version>
+                        </dependency>
+                    </dependencies>
+                </plugin>
+
+                <!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+                <plugin>
+                    <groupId>org.eclipse.m2e</groupId>
+                    <artifactId>lifecycle-mapping</artifactId>
+                    <version>1.0.0</version>
+                    <configuration>
+                        <lifecycleMappingMetadata>
+                            <pluginExecutions>
+                                <!-- integrate idlj plugin to Eclipse m2e -->
+                                <pluginExecution>
+                                    <pluginExecutionFilter>
+                                        <groupId>org.codehaus.mojo</groupId>
+                                        <artifactId>idlj-maven-plugin</artifactId>
+                                        <versionRange>${idlj-maven-plugin-version}</versionRange>
+                                        <goals>
+                                            <goal>generate</goal>
+                                        </goals>
+                                    </pluginExecutionFilter>
+                                    <action>
+                                        <execute>
+                                           <runOnConfiguration>true</runOnConfiguration>
+                                        </execute>
+                                    </action>
+                                </pluginExecution>
+                            </pluginExecutions>
+                        </lifecycleMappingMetadata>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

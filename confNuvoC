@@ -1,0 +1,10 @@
+#!/bin/bash
+
+rm -Rf ./src/main/generated/*
+FILES=`find ./src/main/nuvoc  -name "*.scala"`
+
+for file in $FILES; do
+    echo "nuvoc $file"
+    nuvoc $file -o ./src/main/generated
+done
+

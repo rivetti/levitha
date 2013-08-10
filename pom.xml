@@ -1,0 +1,246 @@
+<!-- OpenSplice Mobile This software and documentation are Copyright 2010 
+	to 2013 PrismTech Limited and its licensees. All rights reserved. See file: 
+	docs/LICENSE.html for full copyright notice and license terms. -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.opensplice.mobile</groupId>
+		<artifactId>parent-pom</artifactId>
+		<version>0.9.0-SNAPSHOT</version>
+		<relativePath>parent-pom</relativePath>
+	</parent>
+
+	<groupId>org.opensplice.jmobile.dev</groupId>
+	<artifactId>DAbstractions</artifactId>
+	<packaging>jar</packaging>
+
+
+	<name>OpenSplice Mobile example: oximeter</name>
+
+
+	<dependencies>
+
+		<!-- NOTE: dependency to OpenSplice Mobile is defined in profiles because 
+			we -->
+		<!-- want to disable logging for release (validation profile). Thus: -->
+		<!-- - in default profile: depend on OpenSplice Mobile, replacing -->
+		<!-- dependency to slf4j-api with slf4j-android -->
+		<!-- - in validation profile: depend on OpenSplice Mobile only, -->
+		<!-- without any slf4j backend -->
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.10.1</version>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-swing</artifactId>
+		</dependency>
+		<!-- dcps-api -->
+		<dependency>
+			<groupId>org.opensplice.mobile</groupId>
+			<artifactId>mobile-dds</artifactId>
+			<version>1.1.1-SNAPSHOT</version>
+		</dependency>
+		<!-- dcps-impl -->
+		<dependency>
+			<groupId>org.opensplice.mobile</groupId>
+			<artifactId>mobile-dds-core</artifactId>
+			<version>1.1.1-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.typesafe.akka</groupId>
+			<artifactId>akka-actor_2.10</artifactId>
+			<version>2.2-M2</version>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.scala-tools</groupId>
+				<artifactId>maven-scala-plugin</artifactId>
+				<version>2.13.1</version>
+				<executions>
+					<execution>
+						<id>scala-compile-first</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>add-source</goal>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>scala-test-compile</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+
+			<plugin>
+				<groupId>org.opensplice.mobile</groupId>
+				<artifactId>idl2j</artifactId>
+				<version>${project.version}</version>
+				<executions>
+					<execution>
+						<id>idl-compile</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>idl-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<includeDirs>
+						<includeDir>src/main/idl</includeDir>
+					</includeDirs>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-generated-sources</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>${project.build.directory}/generated-sources/idl</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+<!--			<plugin>
+				<groupId>org.opensplice.mobile</groupId>
+				<artifactId>idl2j</artifactId>
+				<version>${project.version}</version>
+				<executions>
+					<execution>
+						<id>idl-compile</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>idl-compile</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+-->
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.opensplice.mobile</groupId>
+										<artifactId>idl2j</artifactId>
+										<versionRange>[0.9.0-SNAPSHOT,)</versionRange>
+										<goals>
+											<goal>idl-compile</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.gmaven</groupId>
+										<artifactId>gmaven-plugin</artifactId>
+										<versionRange>${gmaven-plugin-version}</versionRange>
+										<goals>
+											<goal>execute</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.scala-tools
+										</groupId>
+										<artifactId>
+											maven-scala-plugin
+										</artifactId>
+										<versionRange>
+											[2.13.1,)
+										</versionRange>
+										<goals>
+											<goal>compile</goal>
+											<goal>testCompile</goal>
+											<goal>add-source</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											build-helper-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.7,)
+										</versionRange>
+										<goals>
+											<goal>add-source</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+
+
+</project>
